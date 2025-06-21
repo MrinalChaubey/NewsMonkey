@@ -19,7 +19,7 @@ export class News extends Component {
   // async function can wait for some thing to resolve
  async componentDidMount(){
    console.log("cdm") ; 
-   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page}&pageSize=20`;
+   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page}&pageSize=${this.props.pageSize}`;
    let data = await fetch(url)
    let parsedata = await data.json();
    console.log(data) ; 
@@ -29,12 +29,12 @@ export class News extends Component {
 handlenextclick = async()=>{
     console.log("next") ; 
 
-    if(this.state.page + 1 > Math.ceil(this.state.totalResults/20)){
+    if(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize)){
 
     }
     else {
 
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page+1}&pageSize=20`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
     let data = await fetch(url)
     let parsedata = await data.json();
     console.log(data) ; 
@@ -50,7 +50,7 @@ handlenextclick = async()=>{
 
 handlepreviousclick = async()=>{
    console.log("previous") ; 
-   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page-1}&pageSize=20`;
+   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
    let data = await fetch(url)
    let parsedata = await data.json();
    console.log(data) ; 
@@ -65,7 +65,7 @@ handlepreviousclick = async()=>{
     console.log("render") ; 
     return (
       <div className="container my-3">
-        <h2>NewsMonkey - Top Headlines</h2>
+       <h1 className="text-center">NewsMonkey - Top Headlines</h1>
 
         <div className="row">
           {this.state.articles.map((element) => {
@@ -83,7 +83,7 @@ handlepreviousclick = async()=>{
         </div>
         <div className="container d-flex justify-content-between my-1" >
         <button  disabled = {this.state.page <= 1} type="button" className="btn btn-dark" onClick={this.handlepreviousclick}>&larr; Previous</button> 
-        <button type="button" className="btn btn-dark" onClick={this.handlenextclick}>&rarr; Next</button>
+        <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize)} type="button" className="btn btn-dark" onClick={this.handlenextclick}>&rarr; Next</button>
         </div>
       </div>
     );
