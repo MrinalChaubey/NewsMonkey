@@ -1,8 +1,20 @@
 import React, { Component } from "react";
 import Newsitem from "./Newsitem";
+import PropTypes from 'prop-types'
 
 export class News extends Component {
+   static defaultProps = { 
+   country : 'us' ,
+   pageSize : 8  , 
+   category : 'general'   // ✅ fixed capitalization (was 'General')
+   }
  
+    static propTypes = { 
+       country : PropTypes.string,
+       pageSize : PropTypes.number,
+       category : PropTypes.string
+    }
+
   constructor() {
     super();
     console.log("Hello I am a Consructor");
@@ -19,7 +31,7 @@ export class News extends Component {
   // async function can wait for some thing to resolve
  async componentDidMount(){
    console.log("cdm") ; 
-   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+   let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page}&pageSize=${this.props.pageSize}`;
    let data = await fetch(url)
    let parsedata = await data.json();
    console.log(data) ; 
@@ -34,7 +46,7 @@ handlenextclick = async()=>{
     }
     else {
 
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
     let data = await fetch(url)
     let parsedata = await data.json();
     console.log(data) ; 
@@ -50,7 +62,7 @@ handlenextclick = async()=>{
 
 handlepreviousclick = async()=>{
    console.log("previous") ; 
-   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
+   let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=547fc8d08ac54967a5f41115b8c7f305&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
    let data = await fetch(url)
    let parsedata = await data.json();
    console.log(data) ; 
@@ -77,6 +89,8 @@ handlepreviousclick = async()=>{
               description={element.description ? element.description.slice(0,67) : " "}
               imageurl={element.urlToImage}
               newsurl={element.url}
+              author = {element.author}
+                data = {element.publishedAt}
             />
           </div>
           })}
@@ -93,4 +107,4 @@ handlepreviousclick = async()=>{
 export default News;
 
 // larr ---> left arrow html 
-// rarr---> right arrow html --------
+// rarr---> right arrow html -------- -------do not change comments or anything but correct it as news not showing --------
