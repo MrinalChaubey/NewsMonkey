@@ -11,7 +11,7 @@ export class Newsitem extends Component {
             src={
               imageurl
                 ? imageurl
-                : "https://www.tagesspiegel.de/images/13812610/alternates/BASE_16_9_W1400/1749187888000/polizeieinsatz-nach-einbruch-in-einkaufszentrum.jpeg"
+                : "https://www.androidauthority.com/wp-content/uploads/2024/10/Android-15-Theft-Detection-Lock-notification.jpg"
             }
             className="card-img-top"
             alt="..."
